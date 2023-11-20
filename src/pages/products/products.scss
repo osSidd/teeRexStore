@@ -1,0 +1,46 @@
+.shirt-img{
+    width:100%;
+}
+
+.tShirt-container{
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-gap: 4rem;
+    width:70%;
+}
+
+.shirt-box{
+    box-shadow: 2px 2px 25px #dedede;
+    border-radius: 8px;
+     padding: 1rem;
+}
+
+.price-btn{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+
+    .price{
+        font-weight: 600;
+        color: #555;
+        font-size: 1.25rem;
+    }
+
+    button{
+        border:none;
+        background-color: #444;
+        color:#fefefe;
+        padding: 8px 12px;
+        border-radius: 5px;
+        cursor: pointer;
+        &:hover{
+            background-color: #111;
+        }
+
+        &:disabled{
+            background-color: #ee2233aa;
+            pointer-events: none;
+        }
+    }
+}

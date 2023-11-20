@@ -1,0 +1,31 @@
+.filter{
+
+    width:20%;
+    border-radius: 1rem;
+    padding: 2rem 0 2rem 3rem;
+    box-shadow: 2px 2px 25px #dedede;
+
+    ul{
+        padding:0;
+    }
+
+    h2{
+        text-transform: capitalize;
+        color:#333;  
+    }
+
+    li{
+        list-style-type: none;
+        display: flex;
+        align-items: center;
+    }
+
+    li+li{
+        margin-top: 8px;
+    }
+
+    label{
+        display: block;
+        margin-left: 1rem;
+    }
+}
