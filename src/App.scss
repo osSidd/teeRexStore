@@ -6,11 +6,8 @@ body{
     margin: 0;
 }
 
-.filter-product{
-    display: flex;
-    flex-direction: row-reverse;
-    align-items: flex-start;
-    justify-content: space-between;
-    padding: 2rem;
-    margin-top: 2rem;
+button{
+    border:none;
+    outline:none;
+    background-color: transparent;
 }

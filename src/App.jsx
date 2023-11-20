@@ -1,25 +1,29 @@
-import React from "react"
+import React, { Suspense } from "react"
+import {BrowserRouter, Routes, Route} from 'react-router-dom'
 
 import './App.scss'
 import Navbar from "./components/navbar/navbar"
-import Products from "./pages/products/products"
-import Filter from "./components/filter/filter"
-import Search from "./components/search/search"
-import { debounce } from "./utils/functions"
+
+const ProductsPage = React.lazy(() => import('./pages/products/products'))
+const CartPage = React.lazy(() => import('./pages/cart/cart'))
+
 import useFetch from "./hooks/useFetch"
 
 export default function App(){
 
-    const {cart, clothes, displayData, filterKeys, handleSearch, addToCart} = useFetch()
+    const {productsPage, cart, cartPage} = useFetch()
 
     return (
         <div id="sports">
-            <Navbar cart={cart}/>
-            <Search handleChange={debounce(handleSearch, 750)}/>
-            <div className="filter-product">
-                <Products clothes={displayData} addToCart={addToCart}/>
-                <Filter handleChange={debounce(handleSearch, 500)} clothes={clothes} keys={filterKeys}/>
-            </div>
+            <BrowserRouter>
+                <Navbar cart={cart}/>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <Routes>
+                        <Route path="/" element={<ProductsPage products={productsPage}/>}/>
+                        <Route path="cart" element={<CartPage cartPage={cartPage} />}/>
+                    </Routes>
+                </Suspense>
+            </BrowserRouter>
         </div>
     )
 }

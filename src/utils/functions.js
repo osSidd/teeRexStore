@@ -22,3 +22,13 @@ export function searchItem(obj, val){
 function getLowerCase(val){
     return val.toLowerCase()
 }
+
+export function toggleQty(arr, id){
+    return arr.map(item => (
+        {
+            ...item, 
+            quantity: item.id === id ? item.quantity - 1 : item.quantity, 
+            cartQty: item.id === id ?  item.cartQty + 1: item.cartQty
+        }
+    ))
+}

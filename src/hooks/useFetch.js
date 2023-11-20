@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react"
 
-import { searchItem } from "../utils/functions"
+import { searchItem, toggleQty } from "../utils/functions"
 
 export default function useFetch(){
 
@@ -14,21 +14,32 @@ export default function useFetch(){
         fetch('https://geektrust.s3.ap-southeast-1.amazonaws.com/coding-problems/shopping-cart/catalogue.json')
             .then(res => res.json())
             .then(data => {
-                setClothes(data)
-                setDisplayData(data)
+                const arr = data.map(item => ({...item, cartQty:0}))
+                setClothes(arr)
+                setDisplayData(arr)
             })
     }, [])
 
     function addToCart(e){
+        
         const id = parseInt(e.target.id)
-        const item = clothes.find(item => item.id === id)
+        const item = displayData.find(item => item.id === id)
+        
         if(item.quantity){
-             setCart(prev => ([...prev, item]))
-             const temp = clothes.map(item => ({...item, quantity: item.id === id ? item.quantity - 1 : item.quantity}))
-            setClothes(temp)
-            setDisplayData(temp)
+             
+            setCart(prev => {
+                if(prev.find(prevItem => prevItem.id === item.id)) 
+                    return toggleQty(prev, id)
+                else
+                    return [...prev, {...item, quantity: item.quantity - 1, cartQty: item.cartQty + 1}] 
+             })
+                         
+            setClothes(prev => toggleQty(prev, id))
+            setDisplayData(prev => toggleQty(prev, id))
         }
     }
+
+    
 
     function handleSearch(e){
         let value = ''
@@ -42,12 +53,70 @@ export default function useFetch(){
         else setDisplayData(clothes.filter(item => searchItem(item, value)))
     }
 
+    function deleteFromCart(e, index=null){
+        const id = parseInt(index || e.target.id)
+        
+        setCart(prev => prev.filter(item => item.id !== id))
+        
+        let temp = clothes.map(item => ({
+            ...item,
+            cartQty: item.id === id ? 0 : item.cartQty,
+            quantity: item.id === id ? item.quantity + item.cartQty : item.quantity
+        }))
+        
+        setClothes(temp)
+        setDisplayData(temp)
+    }
+
+    function toggleCartQty(e){
+        const {id, type} = e.target.dataset
+
+        setClothes(prev => incDec(prev, id, type))
+        setDisplayData(prev => incDec(prev, id, type))
+        setCart(prev => incDec(prev, id, type))
+        
+        if(type==='dec-qt'){
+            const item = cart.find(i => i.id === parseInt(id))
+            if(item.cartQty === 1) deleteFromCart(e, id)
+        }
+    }
+
+    function incDec(arr, id, type){
+        id = parseInt(id)
+        return arr.map(item => (
+            {
+                ...item, 
+                quantity: item.id === id 
+                            ? (type === 'inc-qt' ? decreaseQty(item, 'quantity', 'quantity') : increaseQty(item, 'cartQty', 'quantity')) 
+                            : item.quantity,
+                cartQty: item.id === id 
+                            ? (type === 'inc-qt' ? increaseQty(item, 'quantity', 'cartQty') : decreaseQty(item, 'cartQty', 'cartQty')) 
+                            : item.cartQty
+            }
+        ))
+    }
+
+    function increaseQty(item, testKey, opKey){
+        return item[testKey] ? item[opKey] + 1 : item[opKey]
+    }
+
+    function decreaseQty(item, testKey, opKey){
+        return item[testKey] > 0 ? item[opKey] - 1 : 0
+    }
+
     return {
-        clothes,
-        displayData,
+        productsPage:{
+            clothes,
+            displayData,
+            filterKeys,
+            handleSearch,
+            addToCart,
+        },
+        cartPage:{
+            cart,
+            deleteFromCart,
+            toggleCartQty,
+        },
         cart,
-        filterKeys,
-        handleSearch,
-        addToCart,
     }
 }
