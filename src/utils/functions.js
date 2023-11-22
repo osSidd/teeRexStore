@@ -1,8 +1,8 @@
 export function getValues(arr, key){
     let temp = []
     arr.forEach(item => {
-        if(!temp.includes(item[key]))
-            temp.push(item[key])
+        if(!temp.find(i => i[key] === item[key]))
+            temp.push({id: item.id, [key]: item[key]})
     })
     return temp
 }

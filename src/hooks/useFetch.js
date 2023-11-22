@@ -7,6 +7,7 @@ export default function useFetch(){
     const [clothes, setClothes] = useState([])
     const [displayData, setDisplayData] = useState([])
     const [cart, setCart] = useState([])
+    const [filterValues, setFilterValues] = useState([])
 
     const filterKeys = ['color', 'gender', 'price', 'type']
 
@@ -44,14 +45,39 @@ export default function useFetch(){
     function handleSearch(e){
         let value = ''
         
-        if(e.target.type === 'checkbox') value = e.target.checked ? e.target.id : ''
+        if(e.target.type === 'checkbox') value = e.target.checked ? e.target.value : ''
         
-        else value = e.target.value
+        else value = e.target.value.trim()
         
         if(!value) setDisplayData(clothes)
 
         else setDisplayData(clothes.filter(item => searchItem(item, value)))
     }
+
+    function filterData(e){
+        const {checked, dataset} = e.target
+        const {key, value} = dataset
+
+        if(checked)
+            setFilterValues(prev => ([...prev, {[key]: value}]))
+
+        else
+            setFilterValues(prev => prev.filter(item => item[key] !== value))
+    }
+
+   function filter(prev, key, value){
+        let temp = []
+        let arr = prev.filter(item => item[key] === value)
+
+        if(!temp.length) return arr
+        
+        arr.forEach(item => {
+            temp = temp.filter(i => i[key] === item[key])
+        })
+        return temp
+   }
+
+    console.log(filterValues)
 
     function deleteFromCart(e, index=null){
         const id = parseInt(index || e.target.id)
@@ -109,6 +135,7 @@ export default function useFetch(){
             clothes,
             displayData,
             filterKeys,
+            filterData,
             handleSearch,
             addToCart,
         },

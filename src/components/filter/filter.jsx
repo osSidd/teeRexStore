@@ -12,9 +12,17 @@ export default function Filter({handleChange, clothes, keys}){
                         <h2>{item}</h2>
                         {
                             getValues(clothes, item).map(val => (
-                                <li key={val}>
-                                    <input type="checkbox" name="filter" id={val} onChange={handleChange}/>
-                                    <label htmlFor={val}>{val}</label>
+                                <li key={val.id}>
+                                    <input 
+                                        type="checkbox" 
+                                        name="filter" 
+                                        id={val.id} 
+                                        value={val[item]}
+                                        data-key={item}
+                                        data-value={val[item]} 
+                                        onChange={handleChange}
+                                    />
+                                    <label htmlFor={val.value}>{val[item]}</label>
                                 </li>
                             ))
                         }

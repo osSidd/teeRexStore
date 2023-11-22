@@ -8,14 +8,14 @@ import Filter from '../../components/filter/filter'
 
 export default function ProductsPage({products}){
 
-    const {clothes, displayData, filterKeys, handleSearch, addToCart} = products
+    const {clothes, displayData, filterKeys, handleSearch, filterData, addToCart} = products
 
     return (
         <>
             <Search handleChange={debounce(handleSearch, 750)}/>
             <div className="filter-product">
                 <Products clothes={displayData} addToCart={addToCart}/>
-                <Filter handleChange={debounce(handleSearch, 500)} clothes={clothes} keys={filterKeys}/>
+                <Filter handleChange={filterData} clothes={clothes} keys={filterKeys}/>
             </div>
         </>
     )
