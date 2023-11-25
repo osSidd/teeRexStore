@@ -6,7 +6,7 @@ export default function Products({clothes, toggleCartQty, addToCart}){
     return (
         <div className="tShirt-container">
         {
-            clothes.length && clothes.map(item => (
+            clothes.length ? clothes.map(item => (
                 <div className="shirt-box" key={item.id}>
                     <img className="shirt-img" src={item.imageURL} alt="cloth" />
                     <div style={{margin:'1.5rem 0 0.5rem 0'}}><span style={{fontSize:'1.5rem'}}>{item.name}</span> (<small>{item.gender}</small>)</div>
@@ -33,7 +33,7 @@ export default function Products({clothes, toggleCartQty, addToCart}){
                     </div>
                 </div>
 
-            ))
+            )) : <div style={{color:'#aaa', fontSize:'2rem'}}>Nothing in store</div>
         }
         </div>
     )

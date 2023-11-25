@@ -72,11 +72,19 @@ export default function useFetch(){
 
         if(key === 'price') value = parseInt(value)
 
-        if(checked)
-            setFilterValues(prev => ({...prev, [key]: prev[key] ? [...prev[key], value] : [value]}))
+        if(checked){
+            if(key === 'price' && value>250 && value<=450)
+                setFilterValues(prev => ({...prev, [key]: prev[key] ? [...prev[key], 300, 350] : [300, 350]}))
             
-        else      
-            setFilterValues(prev => ({...prev, [key]: prev[key].filter(item => item !== value)}))
+            else setFilterValues(prev => ({...prev, [key]: prev[key] ? [...prev[key], value] : [value]}))
+        }
+            
+        else{
+            if(key === 'price'){
+                setFilterValues(prev => ({...prev, [key]: (value>250 && value<=450) ?  prev[key].filter(item => (item!==300 && item!==350)) : prev.filter(item => item !== value)}))
+            }
+            else setFilterValues(prev => ({...prev, [key]: prev[key].filter(item => item !== value)}))
+        }      
     }
 
     useEffect(() => {
@@ -88,6 +96,10 @@ export default function useFetch(){
         setDisplayData(arr)
 
     }, [filterValues, clothes])
+
+    function filterPrice(priceArr, price){
+
+    }
 
     function deleteFromCart(e, index=null){
         const id = parseInt(index || e.target.id)

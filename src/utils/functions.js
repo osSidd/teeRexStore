@@ -1,5 +1,9 @@
 export function getValues(arr, key){
     let temp = []
+    if(key === 'price'){
+        temp.push({id:0, [key]:250}, {id:1, [key]:450}, {id:2, [key]:500})
+        return temp
+    }
     arr.forEach(item => {
         if(!temp.find(i => i[key] === item[key]))
             temp.push({id: item.id, [key]: item[key]})

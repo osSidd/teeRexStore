@@ -9,6 +9,7 @@ const CartPage = React.lazy(() => import('./pages/cart/cart'))
 
 import useFetch from "./hooks/useFetch"
 import ErrorBoundary from "./error/errorBoundary"
+import Footer from "./components/footer/footer"
 
 export default function App(){
 
@@ -27,6 +28,9 @@ export default function App(){
                     </Routes>
                 </Suspense>
             </BrowserRouter>
+            <ErrorBoundary>
+                <Footer/>
+            </ErrorBoundary>
         </div>
     )
 }
