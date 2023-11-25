@@ -3,7 +3,7 @@
 [TeeRex Store](https://www.geektrust.com/challenge/teerex-store) is a [Geektrust](https://www.geektrust.com) front-end coding challenge, which demonstrates a very basic e-commerce product listing page.
 <br/><br/>
 
-![teeRexStore](https://github.com/osSidd/teeRexStore/blob/main/src/assets/teeRexStore.png?raw=true)
+![teeRexStore](/teeRexStore/src/assets/teeRexStore.png?raw=true)
 
 - Here user can browse through a collection of products (clothes) provided by an api.
 - Add clothes to cart
