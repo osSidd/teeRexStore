@@ -1,32 +1,29 @@
 .shopping-cart{
-    margin:3rem 5rem;
     font-weight: 500;
-    font-size: 1.75rem;
+    margin:2rem;
 }
 
 .item-container{
     border-bottom: 1px solid #222;
     padding-bottom: 1rem;
     margin-bottom: 2rem;
-    margin-left: 8rem;
-    width: 50%;
+    margin-left: 2rem;
+    width: 75%;
 }
 
 .items{
     display: grid;
-    grid-template-columns: repeat(6, auto);
+    grid-template-columns: repeat(3, auto);
     align-items: center;
     grid-gap: 2rem;
     width: 100%;
-
-    .name-price{
-           
-    }
+    margin-top:2rem;
 
     .icon{
         font-size: 2rem;
         color: #555;
         cursor: pointer;
+        margin-left: 2rem;
     }
 
     button{
@@ -50,13 +47,37 @@
 }
 
 .total{
-    margin-left: 8rem;
-    font-size: 1.5rem;
+    margin-left: 2rem;
     span:first-child{
         font-weight: 600;
     }
 
     span:last-child{
         margin-left: 2rem;
+    }
+}
+
+@media(min-width:540px) {
+    .shopping-cart{
+        margin:3rem 5rem;
+        font-size: 1.75rem;
+    }
+
+    .item-container{
+        margin-left: 8rem;
+        width: 50%;
+    }
+
+    .items{
+        grid-template-columns: repeat(6, auto);
+        margin-top: 0;
+        .icon{
+            margin-left: 0;
+        }
+    }
+
+    .total{
+        margin-left: 8rem;
+        font-size: 1.5rem;
     }
 }

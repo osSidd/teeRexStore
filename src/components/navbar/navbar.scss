@@ -3,7 +3,7 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding:1rem 3rem;
+    padding:1rem;
     margin:1rem;
     background-color: #dedede;
     border-radius: 8px;
@@ -11,31 +11,21 @@
     .logo-heading{
         color:#555;
         text-decoration: none;
-        font-size: 2.25rem;
         font-weight: 900;
     }
 
     .products{
         display: flex;
         align-items: center;
-
         text-decoration: none;
         color: #555;
-
+     
         cursor: pointer;
 
         .title{
             margin-right: 1rem;
             font-weight: 500;
-            font-size: 1.5rem;
         }
-        
-        // &::after{
-        //     content: '';
-        //     background-color: #333;
-        //     width: 80%;
-        //     height: 5px;
-        // }
     }
 }
 
@@ -44,11 +34,24 @@
         margin-left: 5px;
         margin-bottom: -2px;
         display: block;
-        font-size: 1.25rem;
-    }
-
-    .cart{
-        font-size: 1.5rem;
     }
 }
 
+@media(min-width:540px) {
+    .navbar{
+        padding:1rem 3rem;
+    }
+
+    .logo-heading{
+        font-size: 2.25rem;
+    }
+
+    .products{
+            font-size: 1.5rem;
+            .cart-container{
+                .qty{
+                    font-size: 1.25rem;
+                }
+            }
+    }
+}

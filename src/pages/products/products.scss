@@ -6,3 +6,24 @@
     padding: 2rem;
     margin-top: 2rem;
 }
+
+.search-filter{
+    position: relative;
+}
+   .filter-icon{
+        display: block;
+        position: absolute;
+        right: 2rem;
+        bottom: 0;
+        background-color: #555;
+        color:#fefefe;
+        padding: 8px;
+        border-radius: 8px;
+    }
+
+
+@media(min-width:540px) {
+    .filter-icon{
+        display: none;
+    }
+}

@@ -8,15 +8,18 @@ const ProductsPage = React.lazy(() => import('./pages/products/products'))
 const CartPage = React.lazy(() => import('./pages/cart/cart'))
 
 import useFetch from "./hooks/useFetch"
+import ErrorBoundary from "./error/errorBoundary"
 
 export default function App(){
 
-    const {productsPage, cart, cartPage} = useFetch()
+    const {productsPage, cartPage} = useFetch()
 
     return (
         <div id="sports">
             <BrowserRouter>
-                <Navbar cart={cart}/>
+                <ErrorBoundary>
+                    <Navbar cart={cartPage.cart}/>
+                </ErrorBoundary>
                 <Suspense fallback={<div>Loading...</div>}>
                     <Routes>
                         <Route path="/" element={<ProductsPage products={productsPage}/>}/>

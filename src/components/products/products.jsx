@@ -1,7 +1,7 @@
 import React from "react";
 import './products.scss'
 
-export default function Products({clothes, addToCart}){
+export default function Products({clothes, toggleCartQty, addToCart}){
 
     return (
         <div className="tShirt-container">
@@ -13,13 +13,23 @@ export default function Products({clothes, addToCart}){
                     <span style={{color:'crimson'}}>{item.quantity <=3 && item.quantity ? `only ${item.quantity} left in stock` : null}</span>
                     <div className="price-btn">
                         <span className="price">Rs {item.price}</span>
-                        <button 
-                            id={item.id} 
-                            onClick={addToCart}
-                            disabled={!item.quantity}
-                        >
+                        {
+                            item.cartQty && item.quantity ? 
+                            
+                            <div className="toggle-qty">
+                                <span data-type="inc-qt" data-id={item.id} onClick={toggleCartQty} className="icon">&#43;</span>
+                                {item.cartQty}
+                                <span data-type="dec-qt" data-id={item.id} onClick={toggleCartQty} className="icon">&#8722;</span>
+                            </div> : 
+                            
+                            <button 
+                                id={item.id} 
+                                onClick={addToCart}
+                                disabled={!item.quantity}
+                            >
                                 {item.quantity > 0 ? 'Add to cart' : 'Out of stock'}
-                        </button>
+                            </button>
+                        }
                     </div>
                 </div>
 

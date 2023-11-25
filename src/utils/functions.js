@@ -32,3 +32,9 @@ export function toggleQty(arr, id){
         }
     ))
 }
+
+export function getLabel(val){
+    if(val <= 250) return 'Rs 0 - 250'
+    else if(val > 250 && val <= 450) return 'Rs 251 - 450'
+    return 'More than Rs 450'
+}

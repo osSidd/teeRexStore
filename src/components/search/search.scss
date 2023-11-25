@@ -3,10 +3,16 @@
     margin: auto;
     border:none;
     outline: none;
-    padding-bottom: 8px;
-    padding-left: 8px;
     margin-top: 3rem;
     border-bottom: 1px solid #555;
-    width:30%;
-    font-size: 1.25rem;
+    width:50%;
+}
+
+@media(min-width:540px) {
+    .search{
+        width: 30%;
+        font-size: 1.25rem;
+        padding-bottom: 8px;
+        padding-left: 8px;
+    }
 }

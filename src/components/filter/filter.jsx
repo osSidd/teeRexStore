@@ -1,17 +1,16 @@
 import React from "react"
 import './filter.scss'
-import { getValues } from "../../utils/functions"
+import { getLabel } from "../../utils/functions"
 
-export default function Filter({handleChange, clothes, keys}){
-
+export default function Filter({handleChange, filterObj, keys, mobileFilter}){
     return (
-        <div className="filter">
+        <div className={`filter ${mobileFilter ? 'show-filter' : 'hide-filter'}`}>
             {
                 keys.map(item => (
                     <ul key={item}>
                         <h2>{item}</h2>
                         {
-                            getValues(clothes, item).map(val => (
+                            filterObj[item]?.map(val => (
                                 <li key={val.id}>
                                     <input 
                                         type="checkbox" 
@@ -22,7 +21,7 @@ export default function Filter({handleChange, clothes, keys}){
                                         data-value={val[item]} 
                                         onChange={handleChange}
                                     />
-                                    <label htmlFor={val.value}>{val[item]}</label>
+                                    <label htmlFor={val.value}>{item === 'price' ? getLabel(val[item]) : val[item]}</label>
                                 </li>
                             ))
                         }

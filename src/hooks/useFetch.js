@@ -1,14 +1,16 @@
 import { useState, useEffect } from "react"
 
-import { searchItem, toggleQty } from "../utils/functions"
+import { getValues, searchItem, toggleQty } from "../utils/functions"
 
 export default function useFetch(){
 
     const [clothes, setClothes] = useState([])
     const [displayData, setDisplayData] = useState([])
+    const [searchData, setSearchData] = useState({search:false, arr: []})
     const [cart, setCart] = useState([])
-    const [filterValues, setFilterValues] = useState([])
-
+    const [filterValues, setFilterValues] = useState({})
+    const [filterObj, setFilterObj] = useState({})
+    const [mobileFilter, setMobileFilter] = useState(false)
     const filterKeys = ['color', 'gender', 'price', 'type']
 
     useEffect(() => {
@@ -18,6 +20,13 @@ export default function useFetch(){
                 const arr = data.map(item => ({...item, cartQty:0}))
                 setClothes(arr)
                 setDisplayData(arr)
+                setFilterObj(() => {
+                    let obj = {}
+                    filterKeys.forEach(key => {
+                        obj[key] = getValues(data, key)
+                    })
+                    return obj
+                })
             })
     }, [])
 
@@ -43,41 +52,42 @@ export default function useFetch(){
     
 
     function handleSearch(e){
-        let value = ''
-        
-        if(e.target.type === 'checkbox') value = e.target.checked ? e.target.value : ''
-        
-        else value = e.target.value.trim()
-        
-        if(!value) setDisplayData(clothes)
+        let value = e.target.value.trim()
+        let arr
+        if(!value){
+            arr = [...clothes]
+            setSearchData({search: false, arr,})
+        } 
+        else{
+            arr = [...clothes.filter(item => searchItem(item, value))]
+            setSearchData({search: true, arr})
+        } 
 
-        else setDisplayData(clothes.filter(item => searchItem(item, value)))
+        setDisplayData(arr)
     }
 
     function filterData(e){
         const {checked, dataset} = e.target
-        const {key, value} = dataset
+        let {key, value} = dataset
+
+        if(key === 'price') value = parseInt(value)
 
         if(checked)
-            setFilterValues(prev => ([...prev, {[key]: value}]))
-
-        else
-            setFilterValues(prev => prev.filter(item => item[key] !== value))
+            setFilterValues(prev => ({...prev, [key]: prev[key] ? [...prev[key], value] : [value]}))
+            
+        else      
+            setFilterValues(prev => ({...prev, [key]: prev[key].filter(item => item !== value)}))
     }
 
-   function filter(prev, key, value){
-        let temp = []
-        let arr = prev.filter(item => item[key] === value)
+    useEffect(() => {
+        let arr = searchData.search ? [...searchData.arr] : [...clothes]
+        for(let key in filterValues){
+            if(filterValues[key].length)
+                arr = arr.filter(item => filterValues[key].includes(item[key]))     
+        }
+        setDisplayData(arr)
 
-        if(!temp.length) return arr
-        
-        arr.forEach(item => {
-            temp = temp.filter(i => i[key] === item[key])
-        })
-        return temp
-   }
-
-    console.log(filterValues)
+    }, [filterValues, clothes])
 
     function deleteFromCart(e, index=null){
         const id = parseInt(index || e.target.id)
@@ -96,6 +106,7 @@ export default function useFetch(){
 
     function toggleCartQty(e){
         const {id, type} = e.target.dataset
+        console.log(id, type)
 
         setClothes(prev => incDec(prev, id, type))
         setDisplayData(prev => incDec(prev, id, type))
@@ -130,20 +141,27 @@ export default function useFetch(){
         return item[testKey] > 0 ? item[opKey] - 1 : 0
     }
 
+    function setFilterDisplay(){
+        setMobileFilter(prev => !prev)
+    }
+
     return {
         productsPage:{
             clothes,
             displayData,
             filterKeys,
+            filterObj,
+            mobileFilter,
             filterData,
             handleSearch,
             addToCart,
+            toggleCartQty,
+            setFilterDisplay,
         },
         cartPage:{
             cart,
             deleteFromCart,
             toggleCartQty,
         },
-        cart,
     }
 }

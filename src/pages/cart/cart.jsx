@@ -1,5 +1,6 @@
 import React from "react";
 import './cart.scss'
+import ErrorBoundary from '../../error/errorBoundary'
 
 export default function CartPage({cartPage}){
 
@@ -7,6 +8,7 @@ export default function CartPage({cartPage}){
     const {cart, deleteFromCart, toggleCartQty} = cartPage    
 
     return (
+        <ErrorBoundary>
         <div>
             <h2 className="shopping-cart">Shopping Cart</h2>
             <div className="item-container">
@@ -32,5 +34,6 @@ export default function CartPage({cartPage}){
                 <div><span>Total amount</span> <span>Rs {total}</span></div>
             </div>
         </div>
+        </ErrorBoundary>
     )
 }
