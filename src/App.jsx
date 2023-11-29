@@ -6,6 +6,7 @@ import Navbar from "./components/navbar/navbar"
 
 const ProductsPage = React.lazy(() => import('./pages/products/products'))
 const CartPage = React.lazy(() => import('./pages/cart/cart'))
+const Error = React.lazy(() => import('./pages/error/error'))
 
 import useFetch from "./hooks/useFetch"
 import ErrorBoundary from "./error/errorBoundary"
@@ -25,6 +26,7 @@ export default function App(){
                     <Routes>
                         <Route path="/" element={<ProductsPage products={productsPage}/>}/>
                         <Route path="cart" element={<CartPage cartPage={cartPage} />}/>
+                        <Route path="*" element={<Error/>}/>
                     </Routes>
                 </Suspense>
             </BrowserRouter>
