@@ -4,12 +4,9 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import './App.scss'
 import Navbar from "./components/navbar/navbar"
 
-import ProductsPage from './pages/products/products'
-import CartPage from "./pages/cart/cart"
-import Error from "./pages/error/error"
-// const ProductsPage = React.lazy(() => import('./pages/products/products'))
-// const CartPage = React.lazy(() => import('./pages/cart/cart'))
-// const Error = React.lazy(() => import('./pages/error/error'))
+const ProductsPage = React.lazy(() => import('./pages/products/products'))
+const CartPage = React.lazy(() => import('./pages/cart/cart'))
+const Error = React.lazy(() => import('./pages/error/error'))
 
 import useFetch from "./hooks/useFetch"
 import ErrorBoundary from "./error/errorBoundary"
