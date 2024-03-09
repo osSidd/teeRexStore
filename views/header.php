@@ -1,3 +1,4 @@
+<?php declare(strict_types=1); ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,8 +12,9 @@
             <ul>
                 <li><a href="/"><h1>Catering</h1></a></li>
                 <li><a href="#">products</a></li>
-                <li><a href="#">register</a></li>
-                <li><a href="#">login</a></li>
+                <li><a href="/views/user/register.php">register</a></li>
+                <li><a href="/views/user/login.php">login</a></li>
             </ul>
         </nav>
     </header>
+    <main>
