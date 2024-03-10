@@ -13,8 +13,13 @@
                 <li><a href="/"><h1>Catering</h1></a></li>
                 <li><a href="#">products</a></li>
                 <li><a href="/views/user/register.php">register</a></li>
-                <li><a href="/views/user/login.php">login</a></li>
+                <li><a href="/views/user/login/login.php">login</a></li>
             </ul>
         </nav>
     </header>
     <main>
+    <?php 
+        $view = $_SERVER['PHP_SELF']; 
+        $view_arr = explode('/', $view);
+        echo $view_arr[count($view_arr) - 1];
+    ?>
